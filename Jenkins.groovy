@@ -14,11 +14,15 @@ pipeline {
 //
         stage("AWS Cred") {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-				    credentialsId: "aws-jenkins",
-				    accessKeyVariable: "AWS_ACCESS_KEY_ID",
-				    secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]])
+                    withCredentials([string(credentialsId: 'aws-jenkins', variable: 'secret')]) {
+                        script {
+                        def creds = readJSON text: secret
+                        env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
+                        env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                        env.AWS_REGION = 'ap-southeast-1'
+                                }   
+        sh "aws sts get-caller-identity"
+    }
             }
         }
 
