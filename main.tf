@@ -8,5 +8,6 @@ terraform {
         key = "main"
         region = "ap-southeast-1"
         dynamodb_table = "tf-server-backend-dynamodb"
+        profile = "default"
     }
 }
