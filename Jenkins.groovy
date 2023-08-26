@@ -10,8 +10,17 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pal40/tf-server']])
             }
         }
-
-// Stage - 2 to init terraform
+// Stage - 2 to get AWS Credentials
+//
+        stage("AWS Cred") {
+            steps {
+                withCredentials([[
+				credentialsId: "aws-jenkins",
+				accessKeyVariable: "AWS_ACCESS_KEY_ID",
+				secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]])
+            }
+        }
+// Stage - 3 to init terraform
 //
         stage("Terrform Init") {
             steps {
@@ -19,7 +28,7 @@ pipeline {
             }
         }
 
-// Stage - 3 to perform the terraform action
+// Stage - 4 to perform the terraform action
 //
         stage("Terrform Action") {
             steps {
@@ -28,7 +37,7 @@ pipeline {
             }
         }
 
-// Stage - 4 to add checkov and scan the terraform code
+// Stage - 5 to add checkov and scan the terraform code
 //
         stage("Checkov Scan") {
             steps {
