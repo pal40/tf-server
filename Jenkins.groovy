@@ -5,7 +5,7 @@ pipeline {
 
 // Stage - 1 to checkout the code from github
 //
-        stage('Hello') {
+        stage("Clone Github") {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pal40/tf-server']])
             }
@@ -13,7 +13,7 @@ pipeline {
 
 // Stage - 2 to init terraform
 //
-        stage("Terrform init") {
+        stage("Terrform Init") {
             steps {
                 sh ("terraform init");
             }
@@ -28,17 +28,9 @@ pipeline {
             }
         }
 
-// Stage - 4 to add checkov and print version
+// Stage - 4 to add checkov and scan the terraform code
 //
-        stage("Verify checkov version") {
-            steps {
-                sh ("/usr/local/bin/checkov --version");
-            }
-        }
-
-// Stage - 5 to add checkov and scan the terraform code
-//
-        stage("Check the code in current working directory") {
+        stage("Checkov Scan") {
             steps {
                 sh ("/usr/local/bin/checkov -d . ");
 				echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
