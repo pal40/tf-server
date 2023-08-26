@@ -8,7 +8,5 @@ terraform {
         key = "main"
         region = "ap-southeast-1"
         dynamodb_table = "tf-server-backend-dynamodb"
-        shared_credentials_file = "~/.aws/credentials"
-        profile = "default"
     }
 }

@@ -21,6 +21,7 @@ pipeline {
 				    secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]])
             }
         }
+
 // Stage - 3 to init terraform
 //
         stage("Terrform Init") {
