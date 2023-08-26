@@ -15,9 +15,10 @@ pipeline {
         stage("AWS Cred") {
             steps {
                 withCredentials([[
-				credentialsId: "aws-jenkins",
-				accessKeyVariable: "AWS_ACCESS_KEY_ID",
-				secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]])
+                    $class: 'AmazonWebServicesCredentialsBinding',
+				    credentialsId: "aws-jenkins",
+				    accessKeyVariable: "AWS_ACCESS_KEY_ID",
+				    secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]])
             }
         }
 // Stage - 3 to init terraform
